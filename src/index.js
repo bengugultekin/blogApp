@@ -19,6 +19,13 @@ const addBlog = ({title = '', description = '', dateAdded = 0}) =>({
   }
 })
 
+const removeBlog = ({id}) => (
+  {
+    type: "REMOVE_BLOG",
+    id: id
+  }
+)
+
 const blogsState = [];
 
 const blogReducer = (state = blogsState, action) => {
@@ -28,6 +35,10 @@ const blogReducer = (state = blogsState, action) => {
         ...state,
         action.blog
       ]
+    case "REMOVE_BLOG":
+      return state.filter(({id}) => {
+        return id !== action.id;
+      })
     default: 
       return state;
   }
@@ -53,8 +64,11 @@ store.subscribe(() => {
   console.log(store.getState());
 })
 
-store.dispatch(addBlog({title: 'blog title 1', description: 'blog description 1'}))
-store.dispatch(addBlog({title: 'blog title 2', description: 'blog description 2', dateAdded: Date.now()}))
+const blog1 = store.dispatch(addBlog({title: 'blog title 1', description: 'blog description 1'}))
+const blog2 = store.dispatch(addBlog({title: 'blog title 2', description: 'blog description 2', dateAdded: Date.now()}))
+
+store.dispatch(removeBlog({id: blog1.blog.id}))
+
 
 
 
