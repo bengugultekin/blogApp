@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import * as serviceWorker from './serviceWorker';
 import "./App.css";
@@ -15,6 +16,8 @@ store.subscribe(() => {
 const blog1 = store.dispatch(addBlog({title: 'blog title 1', description: 'blog description 1'}))
 const blog2 = store.dispatch(addBlog({title: 'blog title 2', description: 'blog description 2', dateAdded: Date.now()}))
 
+store.dispatch(addBlog({title: 'blog 3 title', description: 'blog 3 description', dateAdded: Date.now()}))
+
 store.dispatch(removeBlog({id: blog1.blog.id}))
 store.dispatch(editBlog(blog2.blog.id, {title: 'updated blog title', description: 'updated blog description'}))
 
@@ -22,6 +25,9 @@ store.dispatch(editBlog(blog2.blog.id, {title: 'updated blog title', description
 
 
 
-ReactDOM.render(<AppRouter/>, document.getElementById('root'));
+ReactDOM.render(
+                  <Provider store={store}>
+                    <AppRouter/>
+                  </Provider>, document.getElementById('root'));
 
 serviceWorker.unregister();
