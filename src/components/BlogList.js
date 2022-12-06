@@ -1,12 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux';
+import BlogListItem from './BlogListItem'
 
 const BlogList = (props) => {
     console.log(props);
   return (
-    <div>
-      {props.blogs.length}
-    </div>
+    <ul>
+        {
+            props.blogs.map(blog => {
+                return <BlogListItem key={blog.id} {...blog}/>
+            })
+        }
+    </ul>
   )
 }
 
@@ -16,4 +21,5 @@ const mapStateToProps = (state) => {
     }
 }
 
+// Higher Order Component (HOC) -> araştır
 export default connect(mapStateToProps)(BlogList);
