@@ -3,8 +3,10 @@ import React, { Component } from 'react'
 export default class BlogForm extends Component {
     state = {
         title: '',
-        description: ''
+        description: '',
+        error: ''
     }
+
 
     onTitleChange = (e) => {
         const title = e.target.value;
@@ -19,10 +21,28 @@ export default class BlogForm extends Component {
             description
         }));
     }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        if(!this.state.title || !this.state.description) {
+            this.setState({error: 'lütfen tüm alanları doldurunuz'})
+        } else {
+            this.setState({error: ''});
+            this.props.onSubmit({
+                title: this.state.title,
+                description: this.state.description,
+                dateAdded: Date.now()
+            });            
+        }
+
+    }
+
   render() {
     return (
       <div>
-        <form>
+        {this.state.error && <p>{this.state.error}</p>}
+        <form onSubmit={this.onSubmit}>
             <div>
                 <input 
                     placeholder="enter title" 
@@ -36,7 +56,7 @@ export default class BlogForm extends Component {
                     onChange={this.onDescriptionChange}></textarea>
             </div>
             <div>
-                <button>Save Changes</button>
+                <button type='submit'>Save Changes</button>
             </div>
         </form>
       </div>
