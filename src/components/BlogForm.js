@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 
 export default class BlogForm extends Component {
-    state = {
-        title: '',
-        description: '',
-        error: ''
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            description: '',
+            error: ''
+        }
     }
 
 
